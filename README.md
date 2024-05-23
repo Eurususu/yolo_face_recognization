@@ -1,7 +1,5 @@
 # yolov7-face
 
-**2023.04** [yolov8-face](https://github.com/derronqi/yolov8-face) (🔥🔥🔥↑) 
-
 ### New feature
 
 * Dynamic keypoints
@@ -34,9 +32,6 @@
 
 ![](data/images/result.jpg)
 
-#### QQ Group
-
-![QQ Group](data/qrcode_1712047038063.jpg)
 
 
 #### Demo
@@ -54,3 +49,15 @@
 * [https://github.com/TexasInstruments/edgeai-yolov5/tree/yolo-pose](https://github.com/TexasInstruments/edgeai-yolov5/tree/yolo-pose)
 
 * [https://github.com/ppogg/YOLOv5-Lite](https://github.com/ppogg/YOLOv5-Lite)
+
+#### 保存特征
+* detect.py中参数设置 --source 图片文件夹, --img-size 图片尺寸, --conf-thres 0.7, --save_conf store_false
+, --save_feature store_false
+* target_base_dir = "/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m"修改保存特征的目录
+* feature_data_dir = '/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m' 修改读取特征的目录
+#### 识别过程
+* detect.py中参数设置 --source , --img-size 图片尺寸, --conf-thres 0.5, --save_conf store_true
+, --save_feature store_true
+#### 通用设置
+* rec_model = '/home/jia/.insightface/models/buffalo_l/adaface_r50_web4m.onnx' 识别模型路径
+* rec = FaceONNX(rec_model, mode='adaface') 模型类型选择可以是arcface也可以是adaface，具体看模型路径对应的类型
