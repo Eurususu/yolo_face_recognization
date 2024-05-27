@@ -51,13 +51,14 @@
 * [https://github.com/ppogg/YOLOv5-Lite](https://github.com/ppogg/YOLOv5-Lite)
 
 #### 保存特征
-* detect.py中参数设置 --face lib 人脸库图片, --img-size 图片尺寸, --conf-thres 0.7, --save_crop store_false
-, --save_feature store_false
-* target_base_dir = "/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m"修改保存特征的目录
-* feature_data_dir = '/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m' 修改读取特征的目录
+```shell
+python detect.py --face_lib 人脸库图片目录 --feat-save-dir 人脸特征保存的目录, 
+--img_size  图片尺寸, --conf_thres 0.7, --save_crop, --save_feature, 
+--weights 检测模型pt, --rec_model 识别模型onnx
+```
 #### 识别过程
-* detect.py中参数设置 --source , --img-size 图片尺寸, --conf-thres 0.5, --save_ crop store_true
-, --save_feature store_true
-#### 通用设置
-* rec_model = '/home/jia/.insightface/models/buffalo_l/adaface_r50_web4m.onnx' 识别模型路径
-* rec = FaceONNX(rec_model, mode='adaface') 模型类型选择可以是arcface也可以是adaface，具体看模型路径对应的类型
+```shell
+python detect.py --source 输入源, --img-size 图片尺寸, --conf-thres 0.5, 
+--feat_read_dir 人脸特征读取目录 --mode adaface --weights 检测模型pt, 
+--rec_model 识别模型onnx
+```

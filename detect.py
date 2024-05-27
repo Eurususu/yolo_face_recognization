@@ -27,12 +27,11 @@ def detect(opt):
     webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
         ('rtsp://', 'rtmp://', 'http://', 'https://'))
     # prepare rec model
-    rec_model = '/home/jia/.insightface/models/buffalo_l/adaface_r50_web4m.onnx'
-
-    # rec_model = '/home/jia/.insightface/models/buffalo_l/w600k_r50.onnx'
-    rec = FaceONNX(rec_model, mode='adaface')
+    rec_model = opt.rec_model
+    mode = opt.mode
+    rec = FaceONNX(rec_model, mode=mode)
     rec.prepare(0)
-    feature_data_dir = '/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m'
+    feature_data_dir = opt.feat_read_dir
     feature_dict = {}
     if not opt.save_feature:
         for name in os.listdir(feature_data_dir):
@@ -176,7 +175,7 @@ def detect(opt):
                     print("align & feature time: %f" % (t2 - t1))
                     if opt.save_feature:
                         dir_name = path.split('/')[-2]
-                        target_base_dir = "/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m"
+                        target_base_dir = opt.feat_save_dir
                         target_dir = os.path.join(target_base_dir, dir_name)
                         os.makedirs(target_dir, exist_ok=True)
                         filename = 'feature_data' + f"{count}.npy"
@@ -266,6 +265,9 @@ def detect(opt):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default='weights/yolov7-tiny.pt', help='model.pt path(s)')
+    parser.add_argument('--rec-model', type=str, default='/home/jia/.insightface/models/buffalo_l/adaface_r50_web4m.onnx', help='onnx file for rec')
+    parser.add_argument('--mode', type=str, default='adaface', help='mode to rec adaface or arcface')
+    parser.add_argument('--feat-read-dir', type=str, default='/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m', help='path of read face feature')
     parser.add_argument('--source', type=str, default='rtsp://192.168.12.191/live/1/1', help='source')  # file/folder, 0 for webcam
     parser.add_argument("--face-lib", type=str, default='/home/jia/PycharmProjects/faceDetection/yolov7-face/data/persons', help="the path saved faces pictures, it used when save feature")
     parser.add_argument('--img-size', nargs= '+', type=int, default=[736, 1280], help='inference size (pixels)')
@@ -291,6 +293,7 @@ if __name__ == '__main__':
     parser.add_argument('--hide-conf', default=False, action='store_true', help='hide confidences')
     parser.add_argument('--kpt-label', type=int, default=5, help='number of keypoints')
     parser.add_argument('--save_feature', action='store_true', help='whether to choose save feature')
+    parser.add_argument('--feat-save-dir', type=str, default='/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m', help='path to save feature of face lib')
     opt = parser.parse_args()
     print(opt)
     check_requirements(exclude=('tensorboard', 'pycocotools', 'thop'))
