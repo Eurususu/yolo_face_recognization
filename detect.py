@@ -266,7 +266,8 @@ def detect(opt):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default='weights/yolov7-tiny.pt', help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='/home/jia/anktechDrive/08 算法录像/高密度人群/北京奥林匹克网球中心/视频/115米/1.mp4', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--source', type=str, default='rtsp://192.168.12.191/live/1/1', help='source')  # file/folder, 0 for webcam
+    parser.add_argument("--face-lib", type=str, default='/home/jia/PycharmProjects/faceDetection/yolov7-face/data/persons', help="the path saved faces pictures, it used when save feature")
     parser.add_argument('--img-size', nargs= '+', type=int, default=[736, 1280], help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.5, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')
@@ -300,4 +301,9 @@ if __name__ == '__main__':
                 detect(opt=opt)
                 strip_optimizer(opt.weights)
         else:
-            detect(opt=opt)
+            if opt.save_feature:
+                for dir in os.listdir(opt.face_lib):
+                    opt.source = os.path.join(opt.face_lib, dir)
+                    detect(opt=opt)
+            else:
+                detect(opt=opt)

@@ -51,12 +51,12 @@
 * [https://github.com/ppogg/YOLOv5-Lite](https://github.com/ppogg/YOLOv5-Lite)
 
 #### 保存特征
-* detect.py中参数设置 --source 图片文件夹, --img-size 图片尺寸, --conf-thres 0.7, --save_conf store_false
+* detect.py中参数设置 --face lib 人脸库图片, --img-size 图片尺寸, --conf-thres 0.7, --save_crop store_false
 , --save_feature store_false
 * target_base_dir = "/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m"修改保存特征的目录
 * feature_data_dir = '/home/jia/PycharmProjects/faceDetection/yolov7-face/feature_data_adaface4m' 修改读取特征的目录
 #### 识别过程
-* detect.py中参数设置 --source , --img-size 图片尺寸, --conf-thres 0.5, --save_conf store_true
+* detect.py中参数设置 --source , --img-size 图片尺寸, --conf-thres 0.5, --save_ crop store_true
 , --save_feature store_true
 #### 通用设置
 * rec_model = '/home/jia/.insightface/models/buffalo_l/adaface_r50_web4m.onnx' 识别模型路径
